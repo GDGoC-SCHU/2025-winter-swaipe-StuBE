@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "studentcard"
+version = "0.1.0"
+description = "this repo is for handling student card information"
+authors = [
+    "leebeanbin <67886181+leebeanbin@users.noreply.github.com>"
+]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+fastapi = "^0.115.8"
+uvicorn = "^0.34.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.38"}
+alembic = "^1.14.1"
+psycopg2-binary = "^2.9.10"
+python-multipart = "^0.0.20"
+pydantic = "^2.10.6"
+opencv-python = "^4.11.0.86"
+numpy = ">=1.26.4,<2.0.0"
+pyzbar = "^0.1.9"
+easyocr = "^1.7.2"
+asyncpg = "^0.30.0"
+pydantic-settings = "^2.8.0"
+chromadb = ">=0.4.22"
+opencv-python-headless = "^4.11.0.86"
+python-dotenv = "^1.0.1"
+tenacity = "^8.2.3"
+cachetools = "^5.3.2"
+langchain = "^0.1.4"
+langchain-core = "^0.1.12"
+langchain-community = "^0.0.16"
+langchain-openai = "^0.0.3"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT:-8001}:8001"
+    volumes:
+      - ./src:/app/src  # 소스 코드 볼륨 마운트
+    environment:
+      - PORT=8001
+      - HOST=0.0.0.0
+      - RELOAD=true
+      - WORKERS=1
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8001 --reload
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=student_card_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data: 

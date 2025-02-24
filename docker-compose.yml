@@ -1,0 +1,40 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8001:8001"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://root:nada5011@db:5432/studentcard
+      - HOST=0.0.0.0
+      - PORT=8001
+      - DEBUG=true
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PERSIST_DIRECTORY=/app/vector_db
+      - vector_db_path=/app/vector_db
+    depends_on:
+      db:
+        condition: service_healthy
+    command: poetry run uvicorn src.main:app --host 0.0.0.0 --port 8001
+    restart: unless-stopped
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=nada5011
+      - POSTGRES_DB=studentcard
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d studentcard"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_data: 
